@@ -7,7 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Project launch
 
 - To run the application, you must have `NodeJS` and `NPM` installed
-- Clone repository: `git clone https://github.com/uladzimirfilipau/React-Router-DOM6.git`
+- Clone repository: `git clone https://github.com/uladzimirfilipau/contacts-react-app.git`
 - Install dependencies in the root directory of the project using the command: `npm i`
 - Run application: `npm start`
 
