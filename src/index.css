@@ -93,6 +93,7 @@ button:active {
 }
 
 #contact h1 + p + p {
+  max-width: fit-content;
   white-space: break-spaces;
 }
 
@@ -102,7 +103,8 @@ button:active {
 }
 
 #contact a[href*='twitter'] {
-  display: flex;
+  max-width: fit-content;
+  display: block;
   font-size: 1.5rem;
   color: #3992ff;
   text-decoration: none;
@@ -122,6 +124,11 @@ button:active {
   display: flex;
   gap: 0.5rem;
   margin: 1rem 0;
+}
+
+#detail {
+  padding-top: 2rem;
+  padding-left: 4rem;
 }
 
 form[action$='destroy'] button {
