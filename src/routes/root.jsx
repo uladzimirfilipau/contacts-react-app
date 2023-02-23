@@ -1,9 +1,14 @@
-import { Outlet, Link, useLoaderData } from 'react-router-dom';
-import { getContacts } from '../contacts';
+import { Outlet, Link, useLoaderData, Form } from 'react-router-dom';
+import { getContacts, createContact } from '../contacts';
 
 export async function loader() {
   const contacts = await getContacts();
   return { contacts };
+}
+
+export async function action() {
+  const contact = await createContact();
+  return { contact };
 }
 
 export default function Root() {
@@ -42,9 +47,9 @@ export default function Root() {
             <div className='sr-only' aria-live='polite' />
           </form>
 
-          <form method='post'>
-            <button type='submit'>Add</button>
-          </form>
+          <Form method='post'>
+            <button type='submit'>New</button>
+          </Form>
         </div>
 
         <nav>
