@@ -11,7 +11,11 @@ export default function Contact() {
 
   return (
     <section id='contact'>
-      <img key={contact.avatar} src={contact.avatar || null} alt='Contact' />
+      {contact.avatar ? (
+        <img key={contact.avatar} src={contact.avatar} alt={contact.last} />
+      ) : (
+        <img src={null} alt='No Avatar' />
+      )}
 
       <div>
         <h1>
@@ -39,6 +43,7 @@ export default function Contact() {
           <Form action='edit'>
             <button type='submit'>Edit</button>
           </Form>
+
           <Form
             method='post'
             action='destroy'
@@ -57,8 +62,8 @@ export default function Contact() {
 }
 
 function Favorite({ contact }) {
-  // yes, this is a `let` for later
   let favorite = contact.favorite;
+
   return (
     <Form method='post'>
       <button
