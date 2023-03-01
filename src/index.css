@@ -137,9 +137,9 @@ button:active {
 }
 
 #detail {
-  padding-top: 2rem;
-  padding-left: 4rem;
-  padding-right: 4rem;
+  flex: 1;
+  padding: 2rem 4rem;
+  width: 100%;
 }
 
 #detail.loading {
