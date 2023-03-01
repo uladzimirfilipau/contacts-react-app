@@ -1,4 +1,4 @@
-import { Form, useLoaderData, redirect } from 'react-router-dom';
+import { Form, useLoaderData, redirect, useNavigate } from 'react-router-dom';
 import { updateContact } from '../contacts';
 
 export async function action({ request, params }) {
@@ -10,30 +10,33 @@ export async function action({ request, params }) {
 
 export default function EditContact() {
   const contact = useLoaderData();
+  const { first, last, twitter, avatar, notes } = contact;
+
+  const navigate = useNavigate();
 
   return (
     <Form method='post' id='contact-form'>
       <p>
         <span>Name</span>
         <input
-          placeholder='First'
+          placeholder='Firstname'
           aria-label='First name'
           type='text'
           name='first'
-          defaultValue={contact.first}
+          defaultValue={first}
         />
         <input
-          placeholder='Last'
+          placeholder='Lastname'
           aria-label='Last name'
           type='text'
           name='last'
-          defaultValue={contact.last}
+          defaultValue={last}
         />
       </p>
 
       <label>
         <span>Twitter</span>
-        <input type='text' name='twitter' placeholder='@jack' defaultValue={contact.twitter} />
+        <input type='text' name='twitter' placeholder='@twittername' defaultValue={twitter} />
       </label>
 
       <label>
@@ -43,18 +46,31 @@ export default function EditContact() {
           aria-label='Avatar URL'
           type='text'
           name='avatar'
-          defaultValue={contact.avatar}
+          defaultValue={avatar}
         />
       </label>
 
       <label>
         <span>Notes</span>
-        <textarea name='notes' defaultValue={contact.notes} rows={6} />
+        <textarea
+          placeholder='Make some notes...'
+          aria-label='Notes'
+          name='notes'
+          defaultValue={notes}
+          rows={6}
+        />
       </label>
 
       <p>
         <button type='submit'>Save</button>
-        <button type='button'>Cancel</button>
+        <button
+          type='button'
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          Cancel
+        </button>
       </p>
     </Form>
   );
