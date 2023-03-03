@@ -1,9 +1,20 @@
-import { Outlet, NavLink, useLoaderData, Form, redirect, useNavigation } from 'react-router-dom';
+import { useEffect } from 'react';
+import {
+  Outlet,
+  NavLink,
+  useLoaderData,
+  Form,
+  redirect,
+  useNavigation,
+  useSubmit,
+} from 'react-router-dom';
 import { getContacts, createContact } from '../contacts';
 
-export async function loader() {
-  const contacts = await getContacts();
-  return { contacts };
+export async function loader({ request }) {
+  const url = new URL(request.url);
+  const search = url.searchParams.get('search');
+  const contacts = await getContacts(search);
+  return { contacts, search };
 }
 
 export async function action() {
@@ -12,8 +23,9 @@ export async function action() {
 }
 
 export default function Root() {
-  const { contacts } = useLoaderData();
+  const { contacts, search } = useLoaderData();
   const navigation = useNavigation();
+  const submit = useSubmit();
 
   const contactsItems = contacts.map(({ id, first, last, favorite }) => (
     <li key={id}>
@@ -33,6 +45,20 @@ export default function Root() {
     </li>
   ));
 
+  const handleChange = (event) => {
+    const isFirstSearch = search == null;
+    submit(event.currentTarget.form, {
+      replace: !isFirstSearch,
+    });
+  };
+
+  const searching =
+    navigation.location && new URLSearchParams(navigation.location.search).has('search');
+
+  useEffect(() => {
+    document.getElementById('search').value = search;
+  }, [search]);
+
   return (
     <>
       <section id='sidebar'>
@@ -41,13 +67,16 @@ export default function Root() {
         <div>
           <form id='search-form' role='search'>
             <input
+              className={searching ? 'loading' : ''}
               id='search'
               aria-label='Search contacts'
               placeholder='Search contacts'
               type='search'
               name='search'
+              defaultValue={search}
+              onChange={handleChange}
             />
-            <div id='search-spinner' aria-hidden hidden={true} />
+            <div id='search-spinner' aria-hidden hidden={!searching} />
             <div className='sr-only' aria-live='polite' />
           </form>
 
